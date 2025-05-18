@@ -1,10 +1,9 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { AuthModule } from './modules/auth/auth.module';
+import { prismaModule } from './shared/configs/prisma/prisma.module';
+import { LoggerMiddleware } from './shared/middlewares/logger.middleware';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [AuthModule, prismaModule],
 })
-export class AppModule {}
+export class AppModule{}
