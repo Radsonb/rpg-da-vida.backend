@@ -15,54 +15,57 @@ enum TaskStatus {
 
 model User {
   @@map("users")
-  id Int @id @default(autoincrement())
-  uuid String @unique @default(uuid())
-  name String
-  email String @unique
-  password String
-  level Int @default(1)
-  exp Int @default(0)
-  title Title? @relation(fields: [title_id], references: [id])
-  title_id Int?
-  tasks Task[]
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  uuid      String    @unique @default(uuid())
+  name      String
+  email     String    @unique
+  password  String
+  level     Int       @default(1)
+  exp       Int       @default(0)
+  title     Title?    @relation(fields: [title_id], references: [id])
+  title_id  Int?
+  tasks     Task[]
+  categories Category[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
 }
 
 model Task {
   @@map("tasks")
-  id Int @id @default(autoincrement())
-  uuid String @unique @default(uuid())
-  title String
+  id          Int       @id @default(autoincrement())
+  uuid        String    @unique @default(uuid())
+  title       String
   description String
-  exp Int
-  status TaskStatus
-  date DateTime
-  user User @relation(fields: [user_id], references: [id])
-  user_id Int
-  category Category @relation(fields: [category_id], references: [id])
+  exp         Int
+  status      TaskStatus
+  date        DateTime
+  user        User      @relation(fields: [user_id], references: [id])
+  user_id     Int
+  category    Category  @relation(fields: [category_id], references: [id])
   category_id Int
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
 }
 
 model Title {
   @@map("titles")
-  id Int @id @default(autoincrement())
-  uuid String @unique @default(uuid())
-  name String
+  id          Int       @id @default(autoincrement())
+  uuid        String    @unique @default(uuid())
+  name        String
   requirement Int
-  users User[]
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  users       User[]
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
 }
 
 model Category {
   @@map("categories")
-  id Int @id @default(autoincrement())
-  uuid String @unique @default(uuid())
-  tastType String
-  tasks Task[]
+  id         Int      @id @default(autoincrement())
+  uuid       String   @unique @default(uuid())
+  task_type   String   
+  tasks      Task[]
+  user       User     @relation(fields: [user_id], references: [id]) 
+  user_id    Int      
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
